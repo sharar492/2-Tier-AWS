@@ -9,27 +9,26 @@ resource "aws_vpc" "VPC-Tier" {
 # AWS Public Subnets
 resource "aws_subnet" "subnet-public-1" {
     vpc_id     = aws_vpc.VPC-Tier.id
-    cidr_block = var.subnet-public-1
+    cidr_block = var.subnet_public_1
 }
 
 resource "aws_subnet" "subnet-public-2" {
     vpc_id     = aws_vpc.VPC-Tier.id
-    cidr_block = var.subnet-public-2
+    cidr_block = var.subnet_public_2
 }
 
 # AWS Private Subnets
 resource "aws_subnet" "subnet-private-1" {
     vpc_id     = aws_vpc.VPC-Tier.id
-    cidr_block = var.subnet-private-1
+    cidr_block = var.subnet_private_1
     availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "subnet-private-2" {
     vpc_id     = aws_vpc.VPC-Tier.id
-    cidr_block = var.subnet-private-2
+    cidr_block = var.subnet_private_2
     availability_zone = "us-east-1b"
 }
-
 
 # AWS Internet Gateway
 resource "aws_internet_gateway" "IGW-2-Tier" {
@@ -61,8 +60,9 @@ resource "aws_route_table_association" "RT-Assoc-2" {
 
 # Security Group Configuration
 resource "aws_security_group" "web-sg" {
-    name        = "web-sg-two-tier-network-updated"  # Adjust the name to make it unique
+    name        = "web-sg-two-tier-network-updated-${random_id.id.hex}"  
     description = "security group for the web server (loadbalancer)"
+    vpc_id      = aws_vpc.VPC-Tier.id
     
     ingress {
         from_port   = 80
@@ -93,5 +93,6 @@ resource "aws_security_group" "web-sg" {
     }
 }
 
-
-
+resource "random_id" "id" {
+    byte_length = 4
+}
