@@ -48,8 +48,8 @@ resource "aws_lb" "app_lb" {
   load_balancer_type = "application"
   security_groups    = [module.network.web_security_group_id]
   subnets            = [
-    module.network.subnet_ids["private_1"],
-    module.network.subnet_ids["private_2"]
+    module.network.subnet_ids["public_1"],  # Use public subnets
+    module.network.subnet_ids["public_2"]
   ]
 
   tags = {
