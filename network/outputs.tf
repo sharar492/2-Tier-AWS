@@ -6,9 +6,11 @@ output "subnet_ids" {
     private_2 = aws_subnet.subnet-private-2.id
   }
 }
+
 output "web_security_group_id" {
   value = aws_security_group.web-sg.id
 }
+
 output "vpc_id" {
   value = aws_vpc.VPC-Tier.id
 }
